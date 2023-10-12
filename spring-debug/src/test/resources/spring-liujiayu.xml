@@ -3,12 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
-	   xmlns:msb="http://www.mashibing.com/schema/user/spring-user"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.mashibing.com/schema/user/spring-user http://www.mashibing.com/schema/user/spring-user.xsd ">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<msb:user id="msb" username="liujiayu" email="test@qq.com" password="123456"/>
-
-    <context:component-scan base-package="com.mashibing"/>
+<!--    <context:component-scan base-package="com.mashibing"></context:component-scan>-->
 
 
 <!--&lt;!&ndash;    <bean id="person" class="com.mashibing.Person" >&ndash;&gt;-->
@@ -42,18 +39,6 @@
         <property name="id" value="1"></property>
         <property name="name" value="zhangsan"></property>
     </bean>
-
-	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-		<property name="converters">
-			<set>
-				<bean class="com.mashibing.convert.AddressConverter"/>
-			</set>
-		</property>
-	</bean>
-
-	<bean class="com.mashibing.factorybean.AddressFactoryBean">
-		<property name="addressInfo" value="江苏省_无锡市_梁溪区"/>
-	</bean>
 <!--    <bean class="com.mashibing.MyBFPP"></bean>-->
 <!--    <bean class="com.mashibing.MyBeanFactoryPostProcessor"></bean>-->
 </beans>

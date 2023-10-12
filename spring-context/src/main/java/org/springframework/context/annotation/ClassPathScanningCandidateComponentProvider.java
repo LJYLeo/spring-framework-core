@@ -430,6 +430,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 						if (isCandidateComponent(metadataReader)) {
 							ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);
 							sbd.setSource(resource);
+							// 找出被@Component注解修饰的beanDefinition，并加到集合中
 							if (isCandidateComponent(sbd)) {
 								if (debugEnabled) {
 									logger.debug("Identified candidate component class: " + resource);
@@ -491,6 +492,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 				return false;
 			}
 		}
+		// 要注意这里的includeFilters包含了一个默认注解@Component，所以会扫描被@Component注解修饰的beanDefinition
 		for (TypeFilter tf : this.includeFilters) {
 			if (tf.match(metadataReader, getMetadataReaderFactory())) {
 				return isConditionMatch(metadataReader);

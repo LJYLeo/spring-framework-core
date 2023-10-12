@@ -1,6 +1,6 @@
 package com.mashibing;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.mashibing.selfeditor.Address;
 
 /**
  * 功能描述：
@@ -12,10 +12,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Test {
 
 	public static void main(String[] args) {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("test.xml");
-		Student bean = context.getBean(Student.class);
-		System.out.println(bean);
-		context.close();
+		MyClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("test.xml");
+		Address address = context.getBean(Address.class);
+		System.out.println(address);
 	}
 
 }
