@@ -13,8 +13,8 @@ public class Test {
 
 	public static void main(String[] args) {
 		MyClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("test.xml");
-		Address address = context.getBean(Address.class);
-		System.out.println(address);
+//		Address address = context.getBean(Address.class);
+//		System.out.println(address);
 	}
 
 }

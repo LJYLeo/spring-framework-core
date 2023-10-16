@@ -25,4 +25,11 @@ public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationCon
 		super.customizeBeanFactory(beanFactory);
 //		super.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
 	}
+
+	@Override
+	protected void initPropertySources() {
+		System.out.println("自定义扩展initPropertySources");
+		// 测试扩展
+		getEnvironment().setRequiredProperties("user");
+	}
 }

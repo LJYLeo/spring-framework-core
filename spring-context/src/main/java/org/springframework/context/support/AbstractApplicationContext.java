@@ -538,6 +538,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			// Prepare the bean factory for use in this context.
 			/**
 			 * 给容器注入一些默认参数，一些属性
+			 * 注入一些默认的BPP，注册一些默认的bean
 			 */
 			prepareBeanFactory(beanFactory);
 
@@ -566,10 +567,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				 */
 				initMessageSource();
 
+				// Initialize event multicaster for this context.
 				/**
 				 * 注册事件多播器
 				 */
-				// Initialize event multicaster for this context.
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
@@ -647,6 +648,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		getEnvironment().validateRequiredProperties();
 
 		// Store pre-refresh ApplicationListeners...
+		// 将应用程序监听器加到集合中，springboot这里是有值的
 		if (this.earlyApplicationListeners == null) {
 			this.earlyApplicationListeners = new LinkedHashSet<>(this.applicationListeners);
 		}
@@ -658,6 +660,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 		// Allow for the collection of early ApplicationEvents,
 		// to be published once the multicaster is available...
+		// 创建监听事件的集合对象
 		this.earlyApplicationEvents = new LinkedHashSet<>();
 	}
 
