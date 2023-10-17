@@ -61,13 +61,17 @@ final class PostProcessorRegistrationDelegate {
 		// 最后处理BeanFactoryPostProcessor集合，主要是对beanDefinition进行处理
 
 		// Invoke BeanDefinitionRegistryPostProcessors first, if any.
+		// 已经处理过的BFPP名字集合，防止重复执行
 		Set<String> processedBeans = new HashSet<>();
 
 		if (beanFactory instanceof BeanDefinitionRegistry) {
 			BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
+			// BFPP集合
 			List<BeanFactoryPostProcessor> regularPostProcessors = new ArrayList<>();
+			// BDRPP集合
 			List<BeanDefinitionRegistryPostProcessor> registryProcessors = new ArrayList<>();
 
+			// 外部传进来的BFPP集合包含了BFPP+BDRPP，所以分别放到两个集合中
 			for (BeanFactoryPostProcessor postProcessor : beanFactoryPostProcessors) {
 				if (postProcessor instanceof BeanDefinitionRegistryPostProcessor) {
 					BeanDefinitionRegistryPostProcessor registryProcessor =
@@ -85,6 +89,7 @@ final class PostProcessorRegistrationDelegate {
 			// uninitialized to let the bean factory post-processors apply to them!
 			// Separate between BeanDefinitionRegistryPostProcessors that implement
 			// PriorityOrdered, Ordered, and the rest.
+			// 这里存放的是当前要执行的BDRPP，传进来的上面已经执行过了
 			List<BeanDefinitionRegistryPostProcessor> currentRegistryProcessors = new ArrayList<>();
 
 			// First, invoke the BeanDefinitionRegistryPostProcessors that implement PriorityOrdered.
@@ -104,6 +109,7 @@ final class PostProcessorRegistrationDelegate {
 			currentRegistryProcessors.clear();
 
 			// Next, invoke the BeanDefinitionRegistryPostProcessors that implement Ordered.
+			// 这里重新获取是因为上面的BDRPP执行过程中可能会新增新的BeanDefinition
 			postProcessorNames = beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
 			// 再处理Ordered优先级的
 			for (String ppName : postProcessorNames) {
@@ -120,6 +126,7 @@ final class PostProcessorRegistrationDelegate {
 			// Finally, invoke all other BeanDefinitionRegistryPostProcessors until no further ones appear.
 			boolean reiterate = true;
 			// 最后再处理没有优先级剩下的
+			// 这里通过循环来执行也是因为执行BDRPP过程中又会新增新的BeanDefinition，所以要通过循环把所有BDRPP都执行完
 			while (reiterate) {
 				reiterate = false;
 				postProcessorNames = beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
@@ -137,6 +144,7 @@ final class PostProcessorRegistrationDelegate {
 			}
 
 			// Now, invoke the postProcessBeanFactory callback of all processors handled so far.
+			// BDRPP执行完后再统一执行BFPP
 			invokeBeanFactoryPostProcessors(registryProcessors, beanFactory);
 			invokeBeanFactoryPostProcessors(regularPostProcessors, beanFactory);
 		}
@@ -145,6 +153,8 @@ final class PostProcessorRegistrationDelegate {
 			// Invoke factory processors registered with the context instance.
 			invokeBeanFactoryPostProcessors(beanFactoryPostProcessors, beanFactory);
 		}
+
+		// 到这里为止外部的BFPP和内部的BDRPP都执行完毕，接下来开始执行的内部的BFPP
 
 		// Do not initialize FactoryBeans here: We need to leave all regular beans
 		// uninitialized to let the bean factory post-processors apply to them!
