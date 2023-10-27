@@ -1,5 +1,6 @@
 package com.mashibing;
 
+import com.mashibing.populatebean.Person;
 import com.mashibing.selfeditor.Address;
 
 /**
@@ -12,9 +13,9 @@ import com.mashibing.selfeditor.Address;
 public class Test {
 
 	public static void main(String[] args) {
-		MyClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("test.xml");
-//		Address address = context.getBean(Address.class);
-//		System.out.println(address);
+		MyClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("populateBean.xml");
+		Person person = context.getBean("person", Person.class);
+		System.out.println(person.getMaps());
 	}
 
 }

@@ -146,7 +146,9 @@ public class InitDestroyAnnotationBeanPostProcessor
 
 	@Override
 	public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class<?> beanType, String beanName) {
+		// 收集初始化和销毁方法
 		LifecycleMetadata metadata = findLifecycleMetadata(beanType);
+		// 将初始化、销毁的方法名写回BeanDefinition
 		metadata.checkConfigMembers(beanDefinition);
 	}
 
@@ -245,8 +247,11 @@ public class InitDestroyAnnotationBeanPostProcessor
 				}
 			});
 
+			// 将初始化方法加入集合
 			initMethods.addAll(0, currInitMethods);
+			// 将销毁方法加入集合
 			destroyMethods.addAll(currDestroyMethods);
+			// 取父类，后面遍历
 			targetClass = targetClass.getSuperclass();
 		}
 		while (targetClass != null && targetClass != Object.class);
