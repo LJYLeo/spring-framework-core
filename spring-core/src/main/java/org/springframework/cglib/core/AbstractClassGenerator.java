@@ -342,6 +342,7 @@ abstract public class AbstractClassGenerator<T> implements ClassGenerator {
 						"Please file an issue at cglib's issue tracker.");
 			}
 			synchronized (classLoader) {
+				// 生成代理类名称
 				String name = generateClassName(data.getUniqueNamePredicate());
 				data.reserveName(name);
 				this.setClassName(name);

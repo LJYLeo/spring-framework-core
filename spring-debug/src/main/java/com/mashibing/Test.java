@@ -13,7 +13,7 @@ import com.mashibing.selfeditor.Address;
 public class Test {
 
 	public static void main(String[] args) {
-		MyClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("populateBean.xml");
+		MyClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("aop.xml");
 		Person person = context.getBean("person", Person.class);
 		System.out.println(person.getMaps());
 	}
