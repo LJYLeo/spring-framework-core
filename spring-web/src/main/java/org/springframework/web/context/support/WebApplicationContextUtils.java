@@ -110,6 +110,7 @@ public abstract class WebApplicationContextUtils {
 	@Nullable
 	public static WebApplicationContext getWebApplicationContext(ServletContext sc, String attrName) {
 		Assert.notNull(sc, "ServletContext must not be null");
+		// 这里获取一开始就创建好的root spring容器
 		Object attr = sc.getAttribute(attrName);
 		if (attr == null) {
 			return null;

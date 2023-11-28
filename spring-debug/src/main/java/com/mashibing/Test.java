@@ -2,6 +2,8 @@ package com.mashibing;
 
 import com.mashibing.populatebean.Person;
 import com.mashibing.selfeditor.Address;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * 功能描述：
@@ -14,8 +16,8 @@ public class Test {
 
 	public static void main(String[] args) {
 		MyClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("aop.xml");
-		Person person = context.getBean("person", Person.class);
-		System.out.println(person.getMaps());
+		/*Person person = context.getBean("person", Person.class);
+		System.out.println(person.getMaps());*/
 	}
 
 }

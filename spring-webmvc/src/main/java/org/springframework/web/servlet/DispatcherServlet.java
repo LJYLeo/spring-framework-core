@@ -500,14 +500,24 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
 	 */
 	protected void initStrategies(ApplicationContext context) {
+		// 初始化MultipartResolver：处理文件上传
 		initMultipartResolver(context);
+		// 初始化LocaleResolver：主要用来处理国际化
 		initLocaleResolver(context);
+		// 初始化ThemeResolver：用来处理主题
 		initThemeResolver(context);
+		// 初始化HandlerMapping：映射器，用来将对应的request和controller对应
 		initHandlerMappings(context);
+		// 初始化HandlerAdapter：处理适配器，主要包含Http请求处理器适配器
 		initHandlerAdapters(context);
+		// 初始化HandlerExceptionResolver：基于HandlerExceptionResolver接口的异常处理
 		initHandlerExceptionResolvers(context);
+		// 初始化RequestToViewNameTranslator：当controller处理器方法没有返回一个view对象或逻辑视图名称，
+		// 并且没有往response输出流写数据
 		initRequestToViewNameTranslator(context);
+		// 初始化ViewResolver：将ModelAndView选择合适的视图进行渲染的处理器
 		initViewResolvers(context);
+		// 初始化FlashMapManager：提供请求储存属性，供其他请求使用
 		initFlashMapManager(context);
 	}
 
@@ -552,6 +562,7 @@ public class DispatcherServlet extends FrameworkServlet {
 		}
 		catch (NoSuchBeanDefinitionException ex) {
 			// We need to use the default.
+			// 生成一个默认的localeResolver
 			this.localeResolver = getDefaultStrategy(context, LocaleResolver.class);
 			if (logger.isTraceEnabled()) {
 				logger.trace("No LocaleResolver '" + LOCALE_RESOLVER_BEAN_NAME +
